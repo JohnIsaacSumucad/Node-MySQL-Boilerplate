@@ -24,7 +24,7 @@ const config = require('config.json');
 
 };
 
-async function authenticate({ email, password, ipAddress }} {
+async function authenticate({ email, password, ipAddress }) {
 const account = await db.Account.scope('withHash').findOne({ where: { email } });
 if (!account || !account.isVerified || !(await bcrypt.compare (password, account.passwordHash))) 
    { throw 'Email or password is incorrect';
