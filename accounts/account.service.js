@@ -203,3 +203,21 @@ function basicDetails (account) {
    const { id, title, firstName, lastName, email, role, created, updated, isVerified } = account; 
    return { id, title, firstName, lastName, email, role, created, updated, isVerified };
 }
+
+async function sendVerificationEmail(account, origin) {
+let message;
+if (origin) {
+const verifyUrl = `${origin}/account/verify-email?token=${account.verificationToken}`; 
+   message = '<p>Please click the below link to verify your email address:</p>
+} else {
+}
+<p><a href="${verifyUrl}">${verifyUrl}</a></p>";
+message = '<p>Please use the below token to verify your email address with the <code>/account/verify-email</code> api route:</p> <p><code>${account.verificationToken)</code></p>";
+await sendEmail({
+to: account.enail,
+subject: 'Sign-up Verification API - Verify Email',
+html: <h4>Verify Email</h4>
+<p>Thanks for registering!</p>
+$(message)
+});
+}
