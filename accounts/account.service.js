@@ -60,7 +60,7 @@ refreshToken: newRefreshToken.token
    };
 }
 
-async function revokeToken({ token, ipAddress }} { 
+async function revokeToken({ token, ipAddress }) { 
    const refreshToken = await getRefreshToken(token);
 // revoke token and save
    refreshToken.revoked = Date.now(); 
@@ -88,7 +88,7 @@ async function register(params, origin) {
    await sendVerificationEmail(account, origin);
 }
 
-async function verifyEmail({ token }} {
+async function verifyEmail({ token }) {
 }
    const account = await db.Account.findOne({ where: { verificationToken: token } });
    if (!account) throw 'Verification failed';
@@ -107,7 +107,7 @@ async function forgotPassword({ email }, origin) {
    await sendPasswordResetEmail(account, origin);
 }
 
-async function validateResetToken({ token }} { 
+async function validateResetToken({ token }) { 
    const account = await db.Account.findOne({
 where: {
    resetToken: token,
@@ -118,7 +118,7 @@ where: {
 if (!account) throw 'Invalid token';
 return account;
 }
-async function resetPassword({ token, password }} { const account = await validateResetToken({ token });
+async function resetPassword({ token, password }) { const account = await validateResetToken({ token });
 // update password and remove reset token 
 account.passwordHash = await hash (password); 
 account.passwordReset = Date.now();
@@ -127,7 +127,7 @@ await account.save();
 }
 
 async function getAll() {
-}
+
 const accounts = await db.Account.findAll(); 
 return accounts.map(x => basicDetails(x));
 }
@@ -203,3 +203,4 @@ function basicDetails (account) {
    const { id, title, firstName, lastName, email, role, created, updated, isVerified } = account; 
    return { id, title, firstName, lastName, email, role, created, updated, isVerified };
 }
+
